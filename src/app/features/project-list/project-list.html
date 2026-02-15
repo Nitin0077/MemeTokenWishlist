@@ -1,0 +1,140 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+  <h5 class="fw-bold mb-0">
+    <i class="fa-solid fa-chart-pie text-primary me-2"></i>
+    Project List
+  </h5>
+
+  <button class="btn btn-primary d-flex align-items-center gap-2"
+          (click)="toggleForm()">
+
+    <i class="fa-solid"
+       [ngClass]="showForm ? 'fa-xmark' : 'fa-plus'">
+    </i>
+
+    {{ showForm ? 'Close' : 'Add Project' }}
+
+  </button>
+
+</div>
+
+<!-- Toggle Form -->
+<div *ngIf="showForm" class="mb-3">
+  <app-project-form (save)="handleSave($event)"></app-project-form>
+</div>
+
+
+<div class="row g-3">
+
+  <div class="col-md-4" *ngFor="let p of filteredProjects()">
+
+    <div class="card h-100 border-0 shadow-sm project-card">
+
+      <div class="card-body d-flex flex-column">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h6 class="fw-bold mb-0">
+              <i class="fa-solid fa-diagram-project me-1 text-primary"></i>
+              {{ p.project || '—' }}
+            </h6>
+
+            <small class="text-muted">
+              <i class="fa-regular fa-calendar me-1"></i>
+              {{ p.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+            </small>
+          </div>
+
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-success': p.riskLevel === 'Low',
+              'bg-warning text-dark': p.riskLevel === 'Medium',
+              'bg-danger': p.riskLevel === 'High'
+            }"
+          >
+            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+            {{ p.riskLevel }}
+          </span>
+        </div>
+
+        <hr class="my-2">
+
+        <!-- Details -->
+        <div class="small">
+
+          <div class="mb-1">
+            <i class="fa-brands fa-x-twitter me-1 text-muted"></i>
+            <span class="fw-semibold">{{ p.handle || '—' }}</span>
+          </div>
+
+          <div class="me-2 overflow-hidden">
+    <i class="fa-solid fa-fingerprint me-1 text-muted"></i>
+    <span class="fw-semibold" (click)="copyCA(p.ca)">{{ p.ca || '—' }}</span>
+  </div>
+
+
+
+          <div class="mb-1">
+            <i class="fa-solid fa-layer-group me-1 text-muted"></i>
+            <span class="fw-semibold">{{ p.category || '—' }}</span>
+          </div>
+
+          <div class="mb-1">
+            <i class="fa-solid fa-link me-1 text-muted"></i>
+            <span class="badge bg-secondary">{{ p.chain || '—' }}</span>
+          </div>
+
+          <div class="mb-1">
+            <i class="fa-solid fa-hashtag me-1 text-muted"></i>
+            <span class="fw-semibold">{{ p.narrativeTag || '—' }}</span>
+          </div>
+
+          <div class="mb-2">
+            <i class="fa-solid fa-lightbulb me-1 text-muted"></i>
+            <span class="fw-semibold">{{ p.useCase || '—' }}</span>
+          </div>
+
+        </div>
+
+        <!-- Stats -->
+        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+
+          <div>
+            <small class="text-muted">
+              <i class="fa-solid fa-chart-line me-1"></i>
+              Market Cap
+            </small>
+            <div class="fw-bold">
+              {{ p.marketCap ? ('$' + (p.marketCap | number)) : '—' }}
+            </div>
+          </div>
+
+          <div>
+            <small class="text-muted">
+              <i class="fa-solid fa-star me-1"></i>
+              Rating
+            </small>
+            <div class="fw-bold">{{ p.rating || '—' }}/10</div>
+          </div>
+
+        </div>
+
+        <div class="flex-grow-1"></div>
+
+        <!-- Action -->
+        <button
+          class="btn btn-outline-danger btn-sm w-100"
+          (click)="delete(p.id)">
+          <i class="fa-solid fa-trash me-1"></i>
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

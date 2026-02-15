@@ -1,0 +1,78 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ProjectForm } from '../project-form/project-form';
+import { ProjectService } from '../../../services/project.service';
+import { FormsModule } from '@angular/forms';
+
+
+@Component({
+  selector: 'app-project-list',
+  standalone: true,
+  imports: [CommonModule, ProjectForm,FormsModule],
+  templateUrl: './project-list.html',
+  styleUrl: './project-list.css',
+})
+export class ProjectList implements OnInit {
+
+  projects: any[] = [];
+
+  constructor(private projectService: ProjectService) {}
+
+  ngOnInit() {
+    this.loadProjects();
+  }
+
+  loadProjects() {
+    this.projectService.getAll().subscribe(data => {
+      this.projects = data;
+    });
+  }
+
+  add(project: any) {
+    this.projectService.add(project).subscribe(() => {
+      this.loadProjects();
+    });
+  }
+
+  delete(id: string) {
+    this.projectService.delete(id).subscribe(() => {
+      this.loadProjects();
+    });
+  }
+
+
+  searchText = '';
+riskFilter = '';
+
+filteredProjects() {
+  return this.projects.filter(p => {
+
+    const matchesSearch =
+      p.project?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      p.ca?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      p.chain?.toLowerCase().includes(this.searchText.toLowerCase());
+
+    const matchesRisk =
+      !this.riskFilter || p.riskLevel === this.riskFilter;
+
+    return matchesSearch && matchesRisk;
+  });
+}
+
+
+showForm = false;
+
+toggleForm() {
+  this.showForm = !this.showForm;
+}
+
+handleSave(project: any) {
+  this.add(project);
+  this.showForm = false; // auto close after save
+}
+
+copyCA(ca: string) {
+  navigator.clipboard.writeText(ca);
+}
+
+}

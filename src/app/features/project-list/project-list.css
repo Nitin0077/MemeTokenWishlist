@@ -1,0 +1,49 @@
+:host ::ng-deep app-project-form {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+h5 i {
+  font-size: 18px;
+}
+
+button i {
+  font-size: 14px;
+}
+
+
+.project-card {
+  transition: all 0.2s ease;
+  border-radius: 14px;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+}
+
+
+/* Page background */
+:host {
+  display: block;
+  background: linear-gradient(180deg, #f6f8fb, #eef2f7);
+  padding: 16px;
+}
+
+/* Card */
+.project-card {
+  border-radius: 16px;
+  transition: all 0.25s ease;
+  background: #ffffff;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
+}
