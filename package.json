@@ -1,12 +1,14 @@
 {
   "name": "meme-coin-list2",
   "version": "0.0.0",
+  "private": true,
+
   "scripts": {
-  "ng": "ng",
-  "start": "json-server --watch db.json --host 0.0.0.0 --port $PORT",
-  "build": "ng build",
-  "watch": "ng build --watch --configuration development"
-},
+    "ng": "ng",
+    "start": "json-server --watch db.json --host 0.0.0.0 --port $PORT",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development"
+  },
 
   "prettier": {
     "overrides": [
@@ -18,7 +20,7 @@
       }
     ]
   },
-  "private": true,
+
   "dependencies": {
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
@@ -33,6 +35,7 @@
     "uuid": "^13.0.0",
     "zone.js": "~0.15.0"
   },
+
   "devDependencies": {
     "@angular/build": "^20.0.4",
     "@angular/cli": "^20.0.4",
@@ -46,6 +49,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.8.2",
-     "json-server": "^1.0.0",
+    "json-server": "^1.0.0"
   }
 }
