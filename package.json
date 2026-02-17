@@ -2,13 +2,12 @@
   "name": "meme-coin-list2",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-        "start": "json-server --watch db.json --host 0.0.0.0 --port $PORT",
+  "ng": "ng",
+  "start": "json-server --watch db.json --host 0.0.0.0 --port $PORT",
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development"
+},
 
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
   "prettier": {
     "overrides": [
       {
