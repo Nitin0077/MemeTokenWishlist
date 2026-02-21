@@ -100,11 +100,11 @@
           <span>{{ p.handle || '—' }}</span>
         </div>
 
-        <div class="detail-row ca-row" (click)="copyCA(p.ca)" title="Click to copy">
-          <i class="fa-solid fa-fingerprint"></i>
-          <span class="ca-text">{{ p.ca || '—' }}</span>
-          <i class="fa-regular fa-copy ca-copy-icon"></i>
-        </div>
+       <div class="detail-row ca-row" (click)="openGMGN(p.ca, p.chain)" title="Click to open on GMGN">
+  <i class="fa-solid fa-fingerprint"></i>
+  <span class="ca-text">{{ p.ca || '—' }}</span>
+  <i class="fa-solid fa-arrow-up-right-from-square ca-copy-icon"></i>
+</div>
 
         <div class="detail-row">
           <i class="fa-solid fa-layer-group"></i>
