@@ -102,4 +102,22 @@ export class ProjectList implements OnInit {
     navigator.clipboard.writeText(ca);
   }
 
+  openGMGN(ca: string, chain: string) {
+    console.log('Opening GMGN for CA:', ca, 'on chain:', chain);
+  if (!ca) return;
+
+  const chainMap: { [key: string]: string } = {
+    'Solana':   'sol',
+    'Ethereum': 'eth',
+    'Base':     'base',
+    'Arbitrum': 'arb',
+    'BNB Chain':'bsc',
+    'Sui':      'sui'
+  };
+
+  const chainKey = chainMap[chain] || 'sol'; // default to solana
+  const url = `https://gmgn.ai/${chainKey}/token/${ca}`;
+  window.open(url, '_blank');
+}
+
 }
