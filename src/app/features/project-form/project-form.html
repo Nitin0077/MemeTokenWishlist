@@ -1,140 +1,142 @@
-<div class="card shadow-sm border-0 mb-4 project-form-card">
-  <div class="card-body">
+<div class="form-panel">
 
-    <!-- Header -->
-    <h5 class="fw-bold mb-4 d-flex align-items-center">
-      <i class="fa-solid fa-square-plus text-primary me-2"></i>
-      Add Crypto Project
-    </h5>
-
-    <form [formGroup]="form" (ngSubmit)="submit()">
-
-      <div class="row g-3">
-
-        <!-- Project -->
-        <div class="col-md-4">
-          <label class="form-label">
-            <i class="fa-solid fa-diagram-project me-1 text-muted"></i>
-            Project
-          </label>
-          <input class="form-control" formControlName="project" placeholder="e.g. Bonk">
-        </div>
-
-        <!-- Handle -->
-        <div class="col-md-4">
-          <label class="form-label">
-            <i class="fa-brands fa-x-twitter me-1 text-muted"></i>
-            Handle
-          </label>
-          <input class="form-control" formControlName="handle" placeholder="@project">
-        </div>
-
-        <!-- CA -->
-        <div class="col-md-4">
-          <label class="form-label">
-            <i class="fa-solid fa-fingerprint me-1 text-muted"></i>
-            Contract Address
-          </label>
-          <input class="form-control" formControlName="ca" placeholder="0x...">
-        </div>
-
-        <!-- Category -->
-        <div class="col-md-4">
-          <label class="form-label">
-            <i class="fa-solid fa-layer-group me-1 text-muted"></i>
-            Category
-          </label>
-          <select class="form-select" formControlName="category">
-            <option value="">Select Category</option>
-            <option>Meme Coin</option>
-            <option>AI</option>
-            <option>DeFi</option>
-            <option>Gaming</option>
-            <option>Infra</option>
-            <option>NFT</option>
-            <option>RWA</option>
-            <option>DePIN</option>
-          </select>
-        </div>
-
-        <!-- Chain -->
-        <div class="col-md-4">
-          <label class="form-label">
-            <i class="fa-solid fa-link me-1 text-muted"></i>
-            Chain
-          </label>
-          <select class="form-select" formControlName="chain">
-            <option value="">Select Chain</option>
-            <option>Solana</option>
-            <option>Ethereum</option>
-            <option>Base</option>
-            <option>Sui</option>
-            <option>Hyperliquid</option>
-            <option>Arbitrum</option>
-            <option>Polygon</option>
-            <option>BNB Chain</option>
-          </select>
-        </div>
-
-        <!-- Market Cap -->
-        <div class="col-md-4">
-          <label class="form-label">
-            <i class="fa-solid fa-chart-line me-1 text-muted"></i>
-            Market Cap ($)
-          </label>
-          <input type="text" class="form-control" formControlName="marketCap">
-        </div>
-
-        <!-- Use Case -->
-        <div class="col-md-6">
-          <label class="form-label">
-            <i class="fa-solid fa-lightbulb me-1 text-muted"></i>
-            Use Case
-          </label>
-          <input class="form-control" formControlName="useCase" placeholder="Short description">
-        </div>
-
-        <!-- Narrative -->
-        <div class="col-md-3">
-          <label class="form-label">
-            <i class="fa-solid fa-hashtag me-1 text-muted"></i>
-            Narrative Tag
-          </label>
-          <input class="form-control" formControlName="narrativeTag">
-        </div>
-
-        <!-- Rating -->
-        <div class="col-md-3">
-          <label class="form-label">
-            <i class="fa-solid fa-star me-1 text-muted"></i>
-            Rating
-          </label>
-          <input type="number" class="form-control" formControlName="rating">
-        </div>
-
-        <!-- Risk -->
-        <div class="col-md-4">
-          <label class="form-label">
-            <i class="fa-solid fa-triangle-exclamation me-1 text-muted"></i>
-            Risk Level
-          </label>
-          <select class="form-select" formControlName="riskLevel">
-            <option value="Low">🟢 Low</option>
-            <option value="Medium">🟡 Medium</option>
-            <option value="High">🔴 High</option>
-          </select>
-        </div>
-
+  <!-- Header -->
+  <div class="form-panel-header">
+    <div class="form-panel-title">
+      <div class="form-title-icon">
+        <i class="fa-solid fa-square-plus"></i>
       </div>
-
-      <!-- Button -->
-      <div class="mt-4 d-flex justify-content-end">
-        <button class="btn btn-primary px-4">
-          <i class="fa-solid fa-floppy-disk me-2"></i>
-          Save Project
-        </button>
+      <div>
+        <div class="form-title-text">Add Crypto Project</div>
+        <div class="form-title-sub">Fill in the details below to track a new project</div>
       </div>
-
-    </form>
+    </div>
   </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-grid">
+
+      <!-- Project -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-solid fa-diagram-project"></i> Project
+        </label>
+        <input class="field-input" formControlName="project" placeholder="e.g. Bonk">
+      </div>
+
+      <!-- Handle -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-brands fa-x-twitter"></i> Handle
+        </label>
+        <input class="field-input" formControlName="handle" placeholder="@project">
+      </div>
+
+      <!-- CA -->
+      <div class="field-group field-full">
+        <label class="field-label">
+          <i class="fa-solid fa-fingerprint"></i> Contract Address
+        </label>
+        <input class="field-input font-mono" formControlName="ca" placeholder="0x... or Solana address">
+      </div>
+
+      <!-- Category -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-solid fa-layer-group"></i> Category
+        </label>
+        <select class="field-input" formControlName="category">
+          <option value="">Select Category</option>
+          <option>Meme Coin</option>
+          <option>AI</option>
+          <option>DeFi</option>
+          <option>Gaming</option>
+          <option>Infra</option>
+          <option>NFT</option>
+          <option>RWA</option>
+          <option>DePIN</option>
+        </select>
+      </div>
+
+      <!-- Chain -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-solid fa-link"></i> Chain
+        </label>
+        <select class="field-input" formControlName="chain">
+          <option value="">Select Chain</option>
+          <option>Solana</option>
+          <option>Ethereum</option>
+          <option>Base</option>
+          <option>Sui</option>
+          <option>Hyperliquid</option>
+          <option>Arbitrum</option>
+          <option>Polygon</option>
+          <option>BNB Chain</option>
+        </select>
+      </div>
+
+      <!-- Market Cap -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-solid fa-chart-line"></i> Market Cap ($)
+        </label>
+        <div class="input-with-prefix">
+          <span class="input-prefix">$</span>
+          <input type="text" class="field-input has-prefix" formControlName="marketCap" placeholder="e.g. 1000000">
+        </div>
+      </div>
+
+      <!-- Use Case -->
+      <div class="field-group field-span-2">
+        <label class="field-label">
+          <i class="fa-solid fa-lightbulb"></i> Use Case
+        </label>
+        <input class="field-input" formControlName="useCase" placeholder="Short description of what the project does">
+      </div>
+
+      <!-- Narrative Tag -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-solid fa-hashtag"></i> Narrative Tag
+        </label>
+        <input class="field-input" formControlName="narrativeTag" placeholder="e.g. AI Agent">
+      </div>
+
+      <!-- Rating -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-solid fa-star"></i> Rating
+          <span class="field-hint">(1–10)</span>
+        </label>
+        <input type="number" class="field-input" formControlName="rating" min="1" max="10" placeholder="8">
+      </div>
+
+      <!-- Risk Level -->
+      <div class="field-group">
+        <label class="field-label">
+          <i class="fa-solid fa-triangle-exclamation"></i> Risk Level
+        </label>
+        <select class="field-input" formControlName="riskLevel">
+          <option value="Low">🟢 Low</option>
+          <option value="Medium">🟡 Medium</option>
+          <option value="High">🔴 High</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="form-footer">
+      <div class="form-footer-hint">
+        <i class="fa-solid fa-circle-info me-1"></i>
+        All data is saved locally to your JSON server
+      </div>
+      <button type="submit" class="save-btn">
+        <i class="fa-solid fa-floppy-disk me-2"></i>
+        Save Project
+      </button>
+    </div>
+
+  </form>
 </div>

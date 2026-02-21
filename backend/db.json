@@ -12,48 +12,6 @@
       "rating": 7,
       "riskLevel": "Medium",
       "narrativeTag": null
-    },
-    {
-      "id": "c6cab3e1-4374-4c2f-8eca-8e79ec1af6d7",
-      "project": "wewqfeqf",
-      "handle": "fweqfeqf",
-      "ca": "",
-      "category": "",
-      "chain": "",
-      "useCase": "",
-      "marketCap": null,
-      "rating": 0,
-      "riskLevel": "Low",
-      "narrativeTag": "",
-      "createdAt": "2026-02-15T16:03:32.677Z"
-    },
-    {
-      "id": "3f8f68c4-49f3-41d4-b80d-9dd59cf79159",
-      "project": "wgwgwg",
-      "handle": "wgwg",
-      "ca": "wgwegwgwg",
-      "category": "DeFi",
-      "chain": "Base",
-      "useCase": "wfwfw",
-      "marketCap": 4325,
-      "rating": 5,
-      "riskLevel": "Low",
-      "narrativeTag": "wefwf",
-      "createdAt": "2026-02-15T16:09:06.784Z"
-    },
-    {
-      "id": "e8772cf5-8206-472e-b535-f4f9781c1101",
-      "project": "",
-      "handle": "",
-      "ca": "wewf",
-      "category": "",
-      "chain": "",
-      "useCase": "",
-      "marketCap": "",
-      "rating": 0,
-      "riskLevel": "Low",
-      "narrativeTag": "",
-      "createdAt": "2026-02-15T16:25:06.040Z"
     }
   ]
 }

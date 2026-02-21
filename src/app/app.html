@@ -1,9 +1,67 @@
-<div class="container mt-4">
-  <div class="card shadow-sm mb-3">
-    <div class="card-body bg-primary text-white rounded">
-      <h4 class="mb-0">🚀 Crypto CA Project Manager</h4>
+<div class="dashboard-wrapper">
+
+  <!-- Animated background grid -->
+  <div class="bg-grid"></div>
+
+  <!-- Top Nav Bar -->
+  <nav class="dash-nav">
+    <div class="nav-brand">
+      <div class="brand-icon">₿</div>
+      <div>
+        <div class="brand-title">CryptoDesk</div>
+        <div class="brand-sub">CA Project Manager</div>
+      </div>
     </div>
+
+    <div class="nav-center">
+      <div class="nav-time" id="navTime"></div>
+      <div class="nav-date" id="navDate"></div>
+    </div>
+
+    <div class="nav-right">
+      <div class="status-dot"></div>
+      <span class="status-text">Live</span>
+    </div>
+  </nav>
+
+  <!-- Stats Bar -->
+  <!-- <div class="stats-bar">
+
+    <div class="stat-pill">
+      <i class="fa-solid fa-layer-group"></i>
+      <span class="stat-label">Total Projects</span>
+      <span class="stat-val" id="totalProjects">—</span>
+    </div>
+
+    <div class="stat-pill">
+      <i class="fa-solid fa-shield-halved text-success-soft"></i>
+      <span class="stat-label">Low Risk</span>
+      <span class="stat-val success" id="lowRisk">—</span>
+    </div>
+
+    <div class="stat-pill">
+      <i class="fa-solid fa-triangle-exclamation text-warn-soft"></i>
+      <span class="stat-label">Medium Risk</span>
+      <span class="stat-val warn" id="medRisk">—</span>
+    </div>
+
+    <div class="stat-pill">
+      <i class="fa-solid fa-circle-exclamation text-danger-soft"></i>
+      <span class="stat-label">High Risk</span>
+      <span class="stat-val danger" id="highRisk">—</span>
+    </div>
+
+    <div class="stat-pill">
+      <i class="fa-solid fa-sack-dollar"></i>
+      <span class="stat-label">With Returns</span>
+      <span class="stat-val accent" id="withReturns">—</span>
+    </div>
+
+  </div> -->
+
+  <!-- Main Content -->
+  <div class="dash-content">
+    <app-project-list></app-project-list>
   </div>
 
-  <app-project-list></app-project-list>
 </div>

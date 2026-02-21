@@ -1,140 +1,212 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
+<!-- List Header -->
+<div class="list-header">
 
-  <h5 class="fw-bold mb-0">
-    <i class="fa-solid fa-chart-pie text-primary me-2"></i>
-    Project List
-  </h5>
+  <div class="list-title">
+    <i class="fa-solid fa-chart-pie"></i>
+    <span>Project List</span>
+    <span class="list-count">{{ filteredProjects().length }}</span>
+  </div>
 
-  <button class="btn btn-primary d-flex align-items-center gap-2"
-          (click)="toggleForm()">
+  <div class="list-actions">
 
-    <i class="fa-solid"
-       [ngClass]="showForm ? 'fa-xmark' : 'fa-plus'">
-    </i>
+    <!-- Search -->
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input
+        class="search-input"
+        [(ngModel)]="searchText"
+        placeholder="Search project, CA, chain...">
+    </div>
 
-    {{ showForm ? 'Close' : 'Add Project' }}
+    <!-- Risk Filter -->
+    <select class="filter-select" [(ngModel)]="riskFilter">
+      <option value="">All Risk</option>
+      <option value="Low">🟢 Low</option>
+      <option value="Medium">🟡 Medium</option>
+      <option value="High">🔴 High</option>
+    </select>
 
-  </button>
+    <!-- Add Button -->
+    <button class="add-btn" (click)="toggleForm()">
+      <i class="fa-solid" [ngClass]="showForm ? 'fa-xmark' : 'fa-plus'"></i>
+      {{ showForm ? 'Close' : 'Add Project' }}
+    </button>
+
+  </div>
 
 </div>
 
 <!-- Toggle Form -->
-<div *ngIf="showForm" class="mb-3">
+<div *ngIf="showForm" class="mb-4">
   <app-project-form (save)="handleSave($event)"></app-project-form>
 </div>
 
-
-<div class="row g-3">
-
-  <div class="col-md-4" *ngFor="let p of filteredProjects()">
-
-    <div class="card h-100 border-0 shadow-sm project-card">
-
-      <div class="card-body d-flex flex-column">
-
-        <!-- Header -->
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <div>
-            <h6 class="fw-bold mb-0">
-              <i class="fa-solid fa-diagram-project me-1 text-primary"></i>
-              {{ p.project || '—' }}
-            </h6>
-
-            <small class="text-muted">
-              <i class="fa-regular fa-calendar me-1"></i>
-              {{ p.createdAt | date:'dd MMM yyyy, hh:mm a' }}
-            </small>
-          </div>
-
-          <span
-            class="badge"
-            [ngClass]="{
-              'bg-success': p.riskLevel === 'Low',
-              'bg-warning text-dark': p.riskLevel === 'Medium',
-              'bg-danger': p.riskLevel === 'High'
-            }"
-          >
-            <i class="fa-solid fa-triangle-exclamation me-1"></i>
-            {{ p.riskLevel }}
-          </span>
-        </div>
-
-        <hr class="my-2">
-
-        <!-- Details -->
-        <div class="small">
-
-          <div class="mb-1">
-            <i class="fa-brands fa-x-twitter me-1 text-muted"></i>
-            <span class="fw-semibold">{{ p.handle || '—' }}</span>
-          </div>
-
-          <div class="me-2 overflow-hidden">
-    <i class="fa-solid fa-fingerprint me-1 text-muted"></i>
-    <span class="fw-semibold" (click)="copyCA(p.ca)">{{ p.ca || '—' }}</span>
+<!-- Empty State -->
+<div *ngIf="filteredProjects().length === 0" class="empty-state">
+  <div class="empty-icon">
+    <i class="fa-solid fa-folder-open"></i>
   </div>
+  <div class="empty-title">No projects found</div>
+  <div class="empty-sub">Add your first crypto project to get started</div>
+</div>
 
+<!-- Cards Grid -->
+<div class="projects-grid">
 
+  <div class="project-card" *ngFor="let p of filteredProjects()">
 
-          <div class="mb-1">
-            <i class="fa-solid fa-layer-group me-1 text-muted"></i>
-            <span class="fw-semibold">{{ p.category || '—' }}</span>
+    <!-- Card Top Glow Line (colored by risk) -->
+    <div class="card-risk-line"
+         [ngClass]="{
+           'risk-low':    p.riskLevel === 'Low',
+           'risk-medium': p.riskLevel === 'Medium',
+           'risk-high':   p.riskLevel === 'High'
+         }">
+    </div>
+
+    <div class="card-inner">
+
+      <!-- Header Row -->
+      <div class="card-header-row">
+        <div class="card-title-block">
+          <div class="card-project-name">
+            <i class="fa-solid fa-diagram-project"></i>
+            {{ p.project || '—' }}
           </div>
-
-          <div class="mb-1">
-            <i class="fa-solid fa-link me-1 text-muted"></i>
-            <span class="badge bg-secondary">{{ p.chain || '—' }}</span>
+          <div class="card-date">
+            <i class="fa-regular fa-calendar"></i>
+            {{ p.createdAt | date:'dd MMM yyyy, hh:mm a' }}
           </div>
-
-          <div class="mb-1">
-            <i class="fa-solid fa-hashtag me-1 text-muted"></i>
-            <span class="fw-semibold">{{ p.narrativeTag || '—' }}</span>
-          </div>
-
-          <div class="mb-2">
-            <i class="fa-solid fa-lightbulb me-1 text-muted"></i>
-            <span class="fw-semibold">{{ p.useCase || '—' }}</span>
-          </div>
-
         </div>
 
-        <!-- Stats -->
-        <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+        <span class="risk-badge"
+              [ngClass]="{
+                'risk-badge-low':    p.riskLevel === 'Low',
+                'risk-badge-medium': p.riskLevel === 'Medium',
+                'risk-badge-high':   p.riskLevel === 'High'
+              }">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          {{ p.riskLevel }}
+        </span>
+      </div>
 
-          <div>
-            <small class="text-muted">
-              <i class="fa-solid fa-chart-line me-1"></i>
-              Market Cap
-            </small>
-            <div class="fw-bold">
-              {{ p.marketCap ? ('$' + (p.marketCap | number)) : '—' }}
-            </div>
-          </div>
+      <div class="card-divider"></div>
 
-          <div>
-            <small class="text-muted">
-              <i class="fa-solid fa-star me-1"></i>
-              Rating
-            </small>
-            <div class="fw-bold">{{ p.rating || '—' }}/10</div>
-          </div>
+      <!-- Details -->
+      <div class="card-details">
 
+        <div class="detail-row">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span>{{ p.handle || '—' }}</span>
         </div>
 
-        <div class="flex-grow-1"></div>
+        <div class="detail-row ca-row" (click)="copyCA(p.ca)" title="Click to copy">
+          <i class="fa-solid fa-fingerprint"></i>
+          <span class="ca-text">{{ p.ca || '—' }}</span>
+          <i class="fa-regular fa-copy ca-copy-icon"></i>
+        </div>
 
-        <!-- Action -->
-        <button
-          class="btn btn-outline-danger btn-sm w-100"
-          (click)="delete(p.id)">
-          <i class="fa-solid fa-trash me-1"></i>
+        <div class="detail-row">
+          <i class="fa-solid fa-layer-group"></i>
+          <span>{{ p.category || '—' }}</span>
+        </div>
+
+        <div class="detail-row">
+          <i class="fa-solid fa-link"></i>
+          <span class="chain-badge">{{ p.chain || '—' }}</span>
+        </div>
+
+        <div class="detail-row">
+          <i class="fa-solid fa-hashtag"></i>
+          <span>{{ p.narrativeTag || '—' }}</span>
+        </div>
+
+        <div class="detail-row">
+          <i class="fa-solid fa-lightbulb"></i>
+          <span>{{ p.useCase || '—' }}</span>
+        </div>
+
+      </div>
+
+      <div class="card-divider"></div>
+
+      <!-- Stats Row -->
+      <div class="card-stats">
+
+        <div class="stat-block">
+          <div class="stat-block-label">
+            <i class="fa-solid fa-chart-line"></i> Market Cap
+          </div>
+          <div class="stat-block-val">
+            {{ p.marketCap ? ('$' + (p.marketCap | number)) : '—' }}
+          </div>
+        </div>
+
+        <div class="stat-block">
+          <div class="stat-block-label">
+            <i class="fa-solid fa-star"></i> Rating
+          </div>
+          <div class="stat-block-val">{{ p.rating || '—' }}/10</div>
+        </div>
+
+        <div class="stat-block">
+          <div class="stat-block-label">
+            <i class="fa-solid fa-sack-dollar"></i> Return
+          </div>
+          <div class="stat-block-val"
+               [ngClass]="{
+                 'val-success': p.returnValue > 0,
+                 'val-danger':  p.returnValue < 0,
+                 'val-muted':  !p.returnValue
+               }">
+            {{ p.returnValue ? (p.returnValue + 'x') : '—' }}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Return Edit Input -->
+      <div *ngIf="editingReturnId === p.id" class="return-edit-box">
+        <div class="return-edit-inner">
+          <span class="return-edit-prefix">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </span>
+          <input
+            type="number"
+            class="return-edit-input"
+            placeholder="e.g. 5.2"
+            [(ngModel)]="returnInputValue"
+            min="0"
+            step="0.1"
+          />
+          <span class="return-edit-suffix">x</span>
+          <button class="return-confirm-btn" (click)="saveReturn(p)">
+            <i class="fa-solid fa-check"></i>
+          </button>
+          <button class="return-cancel-btn" (click)="cancelReturn()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="card-actions">
+
+        <button class="action-btn return-btn"
+                [class.active]="editingReturnId === p.id"
+                (click)="toggleReturnEdit(p)">
+          <i class="fa-solid fa-sack-dollar"></i>
+          {{ editingReturnId === p.id ? 'Cancel' : (p.returnValue ? 'Edit Return' : 'Add Return') }}
+        </button>
+
+        <button class="action-btn delete-btn" (click)="delete(p.id)">
+          <i class="fa-solid fa-trash"></i>
           Delete
         </button>
 
       </div>
 
     </div>
-
   </div>
 
 </div>

@@ -1,5 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
+
+export interface Project {
+  id?: string;
+  name: string;
+  description?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -8,19 +15,32 @@ export class ProjectService {
 
   constructor(private http: HttpClient) {}
 
+  private handleError(error: any) {
+    console.error('An error occurred:', error);
+    return throwError(() => new Error(error.message || 'Server error'));
+  }
+
   getAll() {
-    return this.http.get<any[]>(this.api);
+    return this.http.get<Project[]>(this.api).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  add(project: any) {
-    return this.http.post(this.api, project);
+  add(project: Project) {
+    return this.http.post<Project>(this.api, project).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  update(id: string, project: any) {
-    return this.http.put(`${this.api}/${id}`, project);
+  update(id: string, project: Project) {
+    return this.http.put<Project>(`${this.api}/${id}`, project).pipe(
+      catchError(this.handleError)
+    );
   }
 
   delete(id: string) {
-    return this.http.delete(`${this.api}/${id}`);
+    return this.http.delete<void>(`${this.api}/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
 }
