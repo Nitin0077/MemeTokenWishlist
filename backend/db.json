@@ -12,6 +12,20 @@
       "rating": 7,
       "riskLevel": "Medium",
       "narrativeTag": null
+    },
+    {
+      "id": "22a243f0-e4b5-4c12-9cb3-c173c7f6345e",
+      "project": "Hello",
+      "handle": "",
+      "ca": "",
+      "category": "",
+      "chain": "",
+      "useCase": "",
+      "marketCap": "",
+      "rating": 0,
+      "riskLevel": "Low",
+      "narrativeTag": "",
+      "createdAt": "2026-02-21T16:26:48.832Z"
     }
   ]
 }
