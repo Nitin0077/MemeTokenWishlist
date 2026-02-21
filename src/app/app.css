@@ -5,3 +5,87 @@
   font-weight: 600;
   background: linear-gradient(90deg, #0d6efd, #6610f2);
 }
+
+
+/* ── Nav Mobile Responsive ── */
+@media (max-width: 768px) {
+
+  .dash-nav {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-brand {
+    gap: 8px;
+  }
+
+  .brand-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+  }
+
+  .brand-title {
+    font-size: 13px;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+  }
+
+  /* Move clock below brand and live indicator */
+  .nav-center {
+    order: 3;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+  }
+
+  .nav-time {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .nav-date {
+    font-size: 10px;
+  }
+
+  .nav-right {
+    margin-left: auto;
+  }
+
+  .status-text {
+    font-size: 11px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .dash-nav {
+    padding: 8px 12px;
+  }
+
+  /* Hide clock on very small screens to save space */
+  .nav-center {
+    display: block;
+  }
+
+  .brand-title {
+    font-size: 12px;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
+  .brand-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+}
