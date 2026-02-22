@@ -5,6 +5,7 @@
 
   <!-- Top Nav Bar -->
   <nav class="dash-nav">
+
     <div class="nav-brand">
       <div class="brand-icon">₿</div>
       <div>
@@ -19,22 +20,149 @@
     </div>
 
     <div class="nav-right">
-      <!-- Export CSV Button -->
-    <button class="nav-export-btn" (click)="exportToCSV()" title="Export to CSV">
-  <i class="fa-solid fa-file-csv"></i>
-  <span>Export CSV</span>
-</button>
+
+      <!-- Import CSV -->
+      <button class="nav-import-btn" (click)="triggerImport()" title="Import CSV">
+        <i class="fa-solid fa-file-arrow-up"></i>
+        <span class="btn-label">Import</span>
+      </button>
+      <input #csvInput type="file" accept=".csv" style="display:none" (change)="importFromCSV($event)" />
+
+      <div class="nav-divider"></div>
+
+      <!-- Export CSV -->
+      <button class="nav-export-btn" (click)="exportToCSV()" title="Export CSV">
+        <i class="fa-solid fa-file-csv"></i>
+        <span class="btn-label">Export</span>
+      </button>
 
       <div class="nav-divider"></div>
 
       <div class="status-dot"></div>
       <span class="status-text">Live</span>
+
     </div>
   </nav>
 
+  <!-- Win Ratio Stats Bar -->
+  <div class="win-stats-bar">
+
+    <div class="stats-pills-row">
+
+      <div class="win-stat-pill">
+        <i class="fa-solid fa-layer-group"></i>
+        <div class="pill-content">
+          <span class="win-stat-label">Total</span>
+          <span class="win-stat-val">{{ totalProjects }}</span>
+        </div>
+      </div>
+
+      <div class="win-stat-pill">
+        <i class="fa-solid fa-clock"></i>
+        <div class="pill-content">
+          <span class="win-stat-label">Pending</span>
+          <span class="win-stat-val warn">{{ totalPending }}</span>
+        </div>
+      </div>
+
+      <div class="win-stat-pill">
+        <i class="fa-solid fa-trophy"></i>
+        <div class="pill-content">
+          <span class="win-stat-label">Wins</span>
+          <span class="win-stat-val success">{{ wins }}</span>
+        </div>
+      </div>
+
+      <div class="win-stat-pill">
+        <i class="fa-solid fa-skull"></i>
+        <div class="pill-content">
+          <span class="win-stat-label">Losses</span>
+          <span class="win-stat-val danger">{{ losses }}</span>
+        </div>
+      </div>
+
+      <div class="win-stat-pill highlight">
+        <i class="fa-solid fa-percent"></i>
+        <div class="pill-content">
+          <span class="win-stat-label">
+            Win Ratio
+            <span class="win-stat-sub">({{ totalWithReturn }} tracked)</span>
+          </span>
+          <span class="win-stat-val accent">{{ winRatio }}</span>
+        </div>
+      </div>
+
+      <div class="win-stat-pill">
+        <i class="fa-solid fa-rocket"></i>
+        <div class="pill-content">
+          <span class="win-stat-label">Best Return</span>
+          <span class="win-stat-val success">{{ bestReturn }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- W/L Progress Bar -->
+    <div class="win-ratio-bar-wrap">
+      <div class="win-ratio-bar-label">
+        <span class="label-win">
+          <i class="fa-solid fa-trophy"></i> W {{ wins }}
+        </span>
+        <span class="label-loss">
+          <i class="fa-solid fa-skull"></i> L {{ losses }}
+        </span>
+      </div>
+      <div class="win-ratio-bar">
+        <div class="win-ratio-fill"
+             [style.width.%]="winRatioRaw"
+             [ngClass]="{
+               'fill-great': winRatioRaw >= 70,
+               'fill-ok':    winRatioRaw >= 40 && winRatioRaw < 70,
+               'fill-bad':   winRatioRaw < 40
+             }">
+        </div>
+      </div>
+      <span class="win-ratio-pct">{{ winRatio }}</span>
+    </div>
+
+  </div>
+
+  <!-- Date Filter Bar -->
+  <div class="date-filter-bar">
+
+    <div class="date-filter-left">
+      <i class="fa-solid fa-calendar-days"></i>
+      <span>Filter</span>
+    </div>
+
+    <div class="date-filter-presets">
+      <button class="date-preset-btn" [class.active]="activeDatePreset === 'all'"  (click)="setDatePreset('all')">All</button>
+      <button class="date-preset-btn" [class.active]="activeDatePreset === 'today'" (click)="setDatePreset('today')">Today</button>
+      <button class="date-preset-btn" [class.active]="activeDatePreset === '7d'"   (click)="setDatePreset('7d')">7D</button>
+      <button class="date-preset-btn" [class.active]="activeDatePreset === '30d'"  (click)="setDatePreset('30d')">30D</button>
+      <button class="date-preset-btn" [class.active]="activeDatePreset === '90d'"  (click)="setDatePreset('90d')">90D</button>
+    </div>
+
+    <div class="date-filter-custom">
+      <div class="date-input-wrap">
+        <i class="fa-regular fa-calendar"></i>
+        <input type="date" class="date-input" [(ngModel)]="dateFrom" (change)="onCustomDateChange()" />
+      </div>
+      <span class="date-range-sep">→</span>
+      <div class="date-input-wrap">
+        <i class="fa-regular fa-calendar"></i>
+        <input type="date" class="date-input" [(ngModel)]="dateTo" (change)="onCustomDateChange()" />
+      </div>
+      <button class="date-clear-btn" *ngIf="dateFrom || dateTo" (click)="clearDateFilter()" title="Clear">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+  </div>
+
   <!-- Main Content -->
   <div class="dash-content">
-    <app-project-list #projectList></app-project-list>
+    <app-project-list #projectList [dateFrom]="dateFrom" [dateTo]="dateTo"></app-project-list>
   </div>
 
 </div>
