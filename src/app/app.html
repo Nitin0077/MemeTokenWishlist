@@ -19,49 +19,22 @@
     </div>
 
     <div class="nav-right">
+      <!-- Export CSV Button -->
+    <button class="nav-export-btn" (click)="exportToCSV()" title="Export to CSV">
+  <i class="fa-solid fa-file-csv"></i>
+  <span>Export CSV</span>
+</button>
+
+      <div class="nav-divider"></div>
+
       <div class="status-dot"></div>
       <span class="status-text">Live</span>
     </div>
   </nav>
 
-  <!-- Stats Bar -->
-  <!-- <div class="stats-bar">
-
-    <div class="stat-pill">
-      <i class="fa-solid fa-layer-group"></i>
-      <span class="stat-label">Total Projects</span>
-      <span class="stat-val" id="totalProjects">—</span>
-    </div>
-
-    <div class="stat-pill">
-      <i class="fa-solid fa-shield-halved text-success-soft"></i>
-      <span class="stat-label">Low Risk</span>
-      <span class="stat-val success" id="lowRisk">—</span>
-    </div>
-
-    <div class="stat-pill">
-      <i class="fa-solid fa-triangle-exclamation text-warn-soft"></i>
-      <span class="stat-label">Medium Risk</span>
-      <span class="stat-val warn" id="medRisk">—</span>
-    </div>
-
-    <div class="stat-pill">
-      <i class="fa-solid fa-circle-exclamation text-danger-soft"></i>
-      <span class="stat-label">High Risk</span>
-      <span class="stat-val danger" id="highRisk">—</span>
-    </div>
-
-    <div class="stat-pill">
-      <i class="fa-solid fa-sack-dollar"></i>
-      <span class="stat-label">With Returns</span>
-      <span class="stat-val accent" id="withReturns">—</span>
-    </div>
-
-  </div> -->
-
   <!-- Main Content -->
   <div class="dash-content">
-    <app-project-list></app-project-list>
+    <app-project-list #projectList></app-project-list>
   </div>
 
 </div>
