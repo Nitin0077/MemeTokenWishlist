@@ -7,6 +7,51 @@
 }
 
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: rgba(104, 211, 145, 0.08);
+  border: 1px solid rgba(104, 211, 145, 0.25);
+  border-radius: 6px;
+  color: #68d391;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.nav-export-btn:hover {
+  background: rgba(104, 211, 145, 0.18);
+  border-color: rgba(104, 211, 145, 0.5);
+  transform: translateY(-1px);
+}
+
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.1);
+}
+
+/* Hide text on mobile, show only icon */
+@media (max-width: 480px) {
+  .nav-export-btn span {
+    display: none;
+  }
+
+  .nav-export-btn {
+    padding: 7px 10px;
+  }
+}
+
 /* ── Nav Mobile Responsive ── */
 @media (max-width: 768px) {
 
