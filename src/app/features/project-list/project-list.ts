@@ -44,6 +44,9 @@ export class ProjectList implements OnInit {
     });
   }
 
+  
+  
+
   // ✅ Toggle return input open/close per card
   toggleReturnEdit(p: any) {
     if (this.editingReturnId === p.id) {
@@ -118,6 +121,32 @@ export class ProjectList implements OnInit {
   const chainKey = chainMap[chain] || 'sol'; // default to solana
   const url = `https://gmgn.ai/${chainKey}/token/${ca}`;
   window.open(url, '_blank');
+}
+
+
+editingProjectId: string | null = null;
+editDraft: any = {};
+
+toggleEditProject(p: any) {
+  if (this.editingProjectId === p.id) {
+    this.cancelEdit();
+  } else {
+    this.editingProjectId = p.id;
+    this.editDraft = { ...p };
+    this.editingReturnId = null;
+  }
+}
+
+saveEdit(p: any) {
+  this.projectService.update(p.id, this.editDraft).subscribe(() => {
+    this.loadProjects();
+    this.cancelEdit();
+  });
+}
+
+cancelEdit() {
+  this.editingProjectId = null;
+  this.editDraft = {};
 }
 
 }
