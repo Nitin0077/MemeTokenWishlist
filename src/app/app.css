@@ -13,8 +13,7 @@
   font-family: 'Segoe UI', sans-serif;
   position: relative;
   overflow-x: hidden;
-<<<<<<< HEAD
-=======
+
 }
 
 /* ==============================
@@ -537,7 +536,7 @@
   .win-stat-label { font-size: 9px; }
 
   .date-preset-btn { font-size: 10px; padding: 4px 5px; }
->>>>>>> d28c676382d72af177dc7fedade710e7b8f2d397
+
 }
 
 /* ==============================
