@@ -96,8 +96,3 @@
     "analytics": false
   }
 }
-```
-
-Then push and set Vercel **Output Directory** to:
-```
-dist/meme-coin-list2/browser
