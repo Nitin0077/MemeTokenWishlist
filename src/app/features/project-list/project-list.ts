@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectForm } from '../project-form/project-form';
 import { ProjectService } from '../../../services/project.service';
@@ -13,6 +13,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './project-list.css',
 })
 export class ProjectList implements OnInit {
+
+  @Input() dateFrom: string = '';
+@Input() dateTo: string = '';
+
 
   projects: any[] = [];
 
@@ -76,19 +80,36 @@ export class ProjectList implements OnInit {
   riskFilter = '';
 
   filteredProjects() {
-    return this.projects.filter(p => {
+  return this.projects.filter(p => {
 
-      const matchesSearch =
-        p.project?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        p.ca?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        p.chain?.toLowerCase().includes(this.searchText.toLowerCase());
+    // search filter
+    const search = this.searchText?.toLowerCase() || '';
+    const matchSearch = !search ||
+      p.project?.toLowerCase().includes(search) ||
+      p.ca?.toLowerCase().includes(search) ||
+      p.chain?.toLowerCase().includes(search) ||
+      p.handle?.toLowerCase().includes(search);
 
-      const matchesRisk =
-        !this.riskFilter || p.riskLevel === this.riskFilter;
+    // risk filter
+    const matchRisk = !this.riskFilter || p.riskLevel === this.riskFilter;
 
-      return matchesSearch && matchesRisk;
-    });
-  }
+    // date filter
+    let matchDate = true;
+    if (this.dateFrom || this.dateTo) {
+      const created = new Date(p.createdAt).setHours(0, 0, 0, 0);
+      if (this.dateFrom) {
+        const from = new Date(this.dateFrom).setHours(0, 0, 0, 0);
+        if (created < from) matchDate = false;
+      }
+      if (this.dateTo) {
+        const to = new Date(this.dateTo).setHours(23, 59, 59, 999);
+        if (created > to) matchDate = false;
+      }
+    }
+
+    return matchSearch && matchRisk && matchDate;
+  });
+}
 
   showForm = false;
 
