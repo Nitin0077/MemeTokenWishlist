@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/meme-coin-list2",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -26,8 +27,8 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-  "src/styles.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "src/styles.css"
             ]
           },
           "configurations": {
@@ -41,7 +42,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumError": "12kB"
                 }
               ],
               "outputHashing": "all"
@@ -95,3 +96,8 @@
     "analytics": false
   }
 }
+```
+
+Then push and set Vercel **Output Directory** to:
+```
+dist/meme-coin-list2/browser

@@ -11,7 +11,7 @@ export interface Project {
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
 
-  private api = 'http://localhost:3000/projects';
+  private api = 'https://memetokenwishlist-9.onrender.com/projects';
 
   constructor(private http: HttpClient) {}
 
@@ -43,6 +43,10 @@ export class ProjectService {
       catchError(this.handleError)
     );
   }
+<<<<<<< HEAD
 
 
 }
+=======
+}
+>>>>>>> d28c676382d72af177dc7fedade710e7b8f2d397

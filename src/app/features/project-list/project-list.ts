@@ -30,7 +30,11 @@ export class ProjectList implements OnInit {
     this.loadProjects();
   }
 
+<<<<<<< HEAD
   loadProjects() {
+=======
+   loadProjects() {
+>>>>>>> d28c676382d72af177dc7fedade710e7b8f2d397
   this.projectService.getAll().subscribe((projects: any[]) => {
     this.projects = projects; // ✅ plain array, no .record needed
   });
@@ -170,6 +174,10 @@ cancelEdit() {
   this.editDraft = {};
 }
 
+<<<<<<< HEAD
 
 
 }
+=======
+}
+>>>>>>> d28c676382d72af177dc7fedade710e7b8f2d397
