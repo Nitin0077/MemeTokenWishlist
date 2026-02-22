@@ -81,109 +81,115 @@ export class App implements OnInit {
 
   // ─── EXPORT CSV ───────────────────────────────────────
   exportToCSV() {
-    this.projectService.getAll().subscribe((res: any) => {
-      const projects = (res.record || []).filter((p: any) => p.id !== 'init');
+  this.projectService.getAll().subscribe((projects: any[]) => {
 
-      if (!projects.length) {
-        alert('No projects to export.');
-        return;
-      }
+    if (!projects.length) {
+      alert('No projects to export.');
+      return;
+    }
 
-      const headers = [
-        'Project', 'Handle', 'CA', 'Chain', 'Category',
-        'Narrative Tag', 'Use Case', 'Market Cap', 'Rating',
-        'Risk Level', 'Return (x)', 'Created At'
-      ];
+    const headers = [
+      'Project', 'Handle', 'CA', 'Chain', 'Category',
+      'Narrative Tag', 'Use Case', 'Market Cap', 'Rating',
+      'Risk Level', 'Return (x)', 'Created At'
+    ];
 
-      const rows = projects.map((p: any) => [
-        p.project      || '',
-        p.handle       || '',
-        p.ca           || '',
-        p.chain        || '',
-        p.category     || '',
-        p.narrativeTag || '',
-        p.useCase      || '',
-        p.marketCap    || '',
-        p.rating       || '',
-        p.riskLevel    || '',
-        p.returnValue  || '',
-        p.createdAt ? new Date(p.createdAt).toLocaleString() : ''
-      ]);
+    const rows = projects.map((p: any) => [
+      p.project      || '',
+      p.handle       || '',
+      p.ca           || '',
+      p.chain        || '',
+      p.category     || '',
+      p.narrativeTag || '',
+      p.useCase      || '',
+      p.marketCap    || '',
+      p.rating       || '',
+      p.riskLevel    || '',
+      p.returnValue  || '',
+      p.createdAt ? new Date(p.createdAt).toLocaleString() : ''
+    ]);
 
-      const csvContent = [headers, ...rows]
-        .map(row => row.map((cell: any) =>
-          `"${String(cell).replace(/"/g, '""')}"`
-        ).join(','))
-        .join('\n');
+    const csvContent = [headers, ...rows]
+      .map(row => row.map((cell: any) =>
+        `"${String(cell).replace(/"/g, '""')}"`
+      ).join(','))
+      .join('\n');
 
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `cryptodesk-${new Date().toISOString().slice(0, 10)}.csv`;
-      link.click();
-      URL.revokeObjectURL(url);
-    });
-  }
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `cryptodesk-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  });
+}
 
   // ─── IMPORT CSV ───────────────────────────────────────
   triggerImport() {
     this.csvInput.nativeElement.click();
   }
 
-  importFromCSV(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
+ importFromCSV(event: any) {
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      const text = e.target.result as string;
-      const lines = text.trim().split('\n');
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    const text = e.target.result as string;
+    const lines = text.trim().split('\n');
 
-      const imported = lines.slice(1).map(line => {
-        const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
-        const clean = values.map((v: string) => v.replace(/"/g, '').trim());
-        return {
-          id:           crypto.randomUUID(),
-          project:      clean[0]  || '',
-          handle:       clean[1]  || '',
-          ca:           clean[2]  || '',
-          chain:        clean[3]  || '',
-          category:     clean[4]  || '',
-          narrativeTag: clean[5]  || '',
-          useCase:      clean[6]  || '',
-          marketCap:    clean[7]  || '',
-          rating:       clean[8]  || '',
-          riskLevel:    clean[9]  || 'Low',
-          returnValue:  clean[10] ? parseFloat(clean[10]) : null,
-          createdAt:    new Date().toISOString()
-        };
-      }).filter((p: any) => p.project); // skip empty rows
+    const imported = lines.slice(1).map(line => {
+      const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
+      const clean = values.map((v: string) => v.replace(/"/g, '').trim());
 
-      if (!imported.length) {
-        alert('No valid projects found in CSV.');
-        return;
-      }
+      // ✅ use date from CSV (index 11), fallback to now only if missing
+      const csvDate = clean[11] ? new Date(clean[11]) : null;
+      const createdAt = csvDate && !isNaN(csvDate.getTime())
+        ? csvDate.toISOString()
+        : new Date().toISOString();
 
-      const confirmed = confirm(`Import ${imported.length} projects? This will ADD them to your existing list.`);
-      if (!confirmed) return;
+      return {
+        id:           crypto.randomUUID(),
+        project:      clean[0]  || '',
+        handle:       clean[1]  || '',
+        ca:           clean[2]  || '',
+        chain:        clean[3]  || '',
+        category:     clean[4]  || '',
+        narrativeTag: clean[5]  || '',
+        useCase:      clean[6]  || '',
+        marketCap:    clean[7]  || '',
+        rating:       clean[8]  || '',
+        riskLevel:    clean[9]  || 'Low',
+        returnValue:  clean[10] ? parseFloat(clean[10]) : null,
+        createdAt:    createdAt  // ✅ preserved from CSV
+      };
+    }).filter((p: any) => p.project);
 
-      let count = 0;
-      imported.forEach((project: any) => {
-        this.projectService.add(project).subscribe(() => {
-          count++;
-          if (count === imported.length) {
-            this.projectList.loadProjects();
-            alert(`✅ ${imported.length} projects imported successfully!`);
-          }
-        });
+    if (!imported.length) {
+      alert('No valid projects found in CSV.');
+      return;
+    }
+
+    const confirmed = confirm(`Import ${imported.length} projects?`);
+    if (!confirmed) return;
+
+    let count = 0;
+    imported.forEach((project: any) => {
+      this.projectService.add(project).subscribe(() => {
+        count++;
+        if (count === imported.length) {
+          this.projectList.loadProjects();
+          alert(`✅ ${imported.length} projects imported successfully!`);
+        }
       });
+    });
 
-      this.csvInput.nativeElement.value = '';
-    };
+    this.csvInput.nativeElement.value = '';
+  };
 
-    reader.readAsText(file);
-  }
+  reader.readAsText(file);
+}
 
 
   // Date filter
@@ -228,5 +234,8 @@ clearDateFilter() {
   this.dateTo = '';
   this.activeDatePreset = 'all';
 }
+
+
+
 
 }
