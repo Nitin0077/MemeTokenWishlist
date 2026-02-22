@@ -30,11 +30,11 @@ export class ProjectList implements OnInit {
     this.loadProjects();
   }
 
-  loadProjects() {
-    this.projectService.getAll().subscribe(data => {
-      this.projects = data;
-    });
-  }
+   loadProjects() {
+  this.projectService.getAll().subscribe((projects: any[]) => {
+    this.projects = projects; // ✅ plain array, no .record needed
+  });
+}
 
   add(project: any) {
     this.projectService.add(project).subscribe(() => {
