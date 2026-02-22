@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 export interface Project {
   id?: string;
@@ -43,4 +43,6 @@ export class ProjectService {
       catchError(this.handleError)
     );
   }
+
+
 }

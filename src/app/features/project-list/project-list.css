@@ -426,10 +426,314 @@
 
 .delete-btn:hover { background: rgba(248,113,113,0.18); }
 
+
+
+/* ── Risk Filter Button Group ── */
+.risk-filter-group {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.risk-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.risk-filter-btn:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+/* All - active */
+.risk-filter-btn.active {
+  background: var(--surface2);
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
+
+/* Low - active */
+.risk-filter-btn.low.active {
+  background: rgba(52, 211, 153, 0.12);
+  color: var(--success);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+/* Medium - active */
+.risk-filter-btn.medium.active {
+  background: rgba(251, 191, 36, 0.12);
+  color: var(--warn);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+/* High - active */
+.risk-filter-btn.high.active {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+
+/* Edit button */
+.action-btn.edit-btn {
+  background: rgba(99, 179, 237, 0.1);
+  color: #63b3ed;
+  border: 1px solid rgba(99, 179, 237, 0.25);
+}
+.action-btn.edit-btn:hover,
+.action-btn.edit-btn.active {
+  background: rgba(99, 179, 237, 0.2);
+  border-color: rgba(99, 179, 237, 0.5);
+}
+
+/* Edit panel */
+.project-edit-box {
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.project-edit-grid {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  gap: 12px;
+}
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.edit-field label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.edit-field input,
+.edit-field select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.edit-field input:focus,
+.edit-field select:focus {
+  border-color: rgba(99, 179, 237, 0.5);
+}
+
+.edit-field select option {
+  background: #1a1a2e;
+}
+
+.project-edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  justify-content: flex-end;
+}
+
+
+/* Mobile */
+@media (max-width: 480px) {
+  .risk-filter-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .risk-filter-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .list-header  { flex-direction: column; align-items: flex-start; }
   .list-actions { width: 100%; }
   .search-input { width: 100%; }
   .projects-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+
+  /* Header */
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+  }
+
+  .list-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Grid — single column on mobile */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stats row — stack on small screens */
+  .card-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stat-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+  }
+
+  .stat-block-label {
+    margin-bottom: 0;
+  }
+
+  /* Action buttons — full width stack */
+  .card-actions {
+    /* flex-direction: column; */
+    gap: 8px;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+
+  /* CA text — shorter truncation */
+  .ca-text {
+    max-width: 200px;
+  }
+
+  /* Dashboard nav */
+  .dash-nav {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-center {
+    order: 3;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-time {
+    font-size: 14px;
+  }
+
+  /* Stats bar — horizontal scroll on mobile */
+  .stats-bar {
+    padding: 12px 16px;
+  }
+
+  /* Dashboard content padding */
+  .dash-content {
+    padding: 0 16px 40px;
+  }
+
+  /* Return edit box */
+  .return-edit-inner {
+    flex-wrap: wrap;
+  }
+
+  .return-edit-input {
+    min-width: 80px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  /* 2-column grid for very small screens */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-inner {
+    padding: 12px;
+  }
+
+  .card-project-name {
+    font-size: 12px;
+  }
+
+  .risk-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .detail-row {
+    font-size: 11px;
+  }
+
+  .ca-text {
+    max-width: 140px;
+  }
+
+  .dash-nav {
+    padding: 10px 12px;
+  }
+
+  .brand-title {
+    font-size: 13px;
+  }
+
+  .stat-pill {
+    padding: 8px 12px;
+  }
+
 }

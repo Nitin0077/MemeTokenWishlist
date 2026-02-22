@@ -19,12 +19,32 @@
     </div>
 
     <!-- Risk Filter -->
-    <select class="filter-select" [(ngModel)]="riskFilter">
-      <option value="">All Risk</option>
-      <option value="Low">🟢 Low</option>
-      <option value="Medium">🟡 Medium</option>
-      <option value="High">🔴 High</option>
-    </select>
+    <div class="risk-filter-group">
+      <button class="risk-filter-btn"
+              [class.active]="riskFilter === ''"
+              (click)="riskFilter = ''">
+        <i class="fa-solid fa-layer-group"></i>
+        All
+      </button>
+      <button class="risk-filter-btn low"
+              [class.active]="riskFilter === 'Low'"
+              (click)="riskFilter = 'Low'">
+        <i class="fa-solid fa-shield-halved"></i>
+        Low
+      </button>
+      <button class="risk-filter-btn medium"
+              [class.active]="riskFilter === 'Medium'"
+              (click)="riskFilter = 'Medium'">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+        Medium
+      </button>
+      <button class="risk-filter-btn high"
+              [class.active]="riskFilter === 'High'"
+              (click)="riskFilter = 'High'">
+        <i class="fa-solid fa-skull-crossbones"></i>
+        High
+      </button>
+    </div>
 
     <!-- Add Button -->
     <button class="add-btn" (click)="toggleForm()">
@@ -100,10 +120,10 @@
           <span>{{ p.handle || '—' }}</span>
         </div>
 
-        <div class="detail-row ca-row" (click)="copyCA(p.ca)" title="Click to copy">
+        <div class="detail-row ca-row" (click)="openGMGN(p.ca, p.chain)" title="Click to open on GMGN">
           <i class="fa-solid fa-fingerprint"></i>
           <span class="ca-text">{{ p.ca || '—' }}</span>
-          <i class="fa-regular fa-copy ca-copy-icon"></i>
+          <i class="fa-solid fa-arrow-up-right-from-square ca-copy-icon"></i>
         </div>
 
         <div class="detail-row">
@@ -138,7 +158,7 @@
             <i class="fa-solid fa-chart-line"></i> Market Cap
           </div>
           <div class="stat-block-val">
-            {{ p.marketCap ? ('$' + (p.marketCap | number)) : '—' }}
+            {{ p.marketCap ? ('$' + p.marketCap) : '—' }}
           </div>
         </div>
 
@@ -189,6 +209,76 @@
         </div>
       </div>
 
+      <!-- ✏️ Inline Edit Panel -->
+      <div *ngIf="editingProjectId === p.id" class="project-edit-box">
+        <div class="project-edit-grid">
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-diagram-project"></i> Project Name</label>
+            <input type="text" [(ngModel)]="editDraft.project" placeholder="Project name" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-brands fa-x-twitter"></i> Handle</label>
+            <input type="text" [(ngModel)]="editDraft.handle" placeholder="@handle" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-fingerprint"></i> CA</label>
+            <input type="text" [(ngModel)]="editDraft.ca" placeholder="Contract address" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-link"></i> Chain</label>
+            <input type="text" [(ngModel)]="editDraft.chain" placeholder="e.g. ETH, SOL" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-layer-group"></i> Category</label>
+            <input type="text" [(ngModel)]="editDraft.category" placeholder="Category" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-hashtag"></i> Narrative Tag</label>
+            <input type="text" [(ngModel)]="editDraft.narrativeTag" placeholder="Narrative tag" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-lightbulb"></i> Use Case</label>
+            <input type="text" [(ngModel)]="editDraft.useCase" placeholder="Use case" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-chart-line"></i> Market Cap</label>
+            <input type="text" [(ngModel)]="editDraft.marketCap" placeholder="e.g. 1.2M" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-star"></i> Rating</label>
+            <input type="number" [(ngModel)]="editDraft.rating" placeholder="1–10" min="1" max="10" />
+          </div>
+
+          <div class="edit-field">
+            <label><i class="fa-solid fa-triangle-exclamation"></i> Risk Level</label>
+            <select [(ngModel)]="editDraft.riskLevel">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="project-edit-actions">
+          <button class="return-confirm-btn" (click)="saveEdit(p)">
+            <i class="fa-solid fa-check"></i> Save Changes
+          </button>
+          <button class="return-cancel-btn" (click)="cancelEdit()">
+            <i class="fa-solid fa-xmark"></i> Cancel
+          </button>
+        </div>
+      </div>
+
       <!-- Action Buttons -->
       <div class="card-actions">
 
@@ -197,6 +287,14 @@
                 (click)="toggleReturnEdit(p)">
           <i class="fa-solid fa-sack-dollar"></i>
           {{ editingReturnId === p.id ? 'Cancel' : (p.returnValue ? 'Edit Return' : 'Add Return') }}
+        </button>
+
+        <!-- ✏️ NEW EDIT BUTTON -->
+        <button class="action-btn edit-btn"
+                [class.active]="editingProjectId === p.id"
+                (click)="toggleEditProject(p)">
+          <i class="fa-solid" [ngClass]="editingProjectId === p.id ? 'fa-xmark' : 'fa-pen-to-square'"></i>
+          {{ editingProjectId === p.id ? 'Cancel' : 'Edit' }}
         </button>
 
         <button class="action-btn delete-btn" (click)="delete(p.id)">
@@ -209,4 +307,7 @@
     </div>
   </div>
 
+
+
+  
 </div>
